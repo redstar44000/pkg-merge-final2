@@ -1,0 +1,25 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Build EXE
+        run: |
+          cl /std:c++17 /EHsc /Fe:pkgmerge.exe pkgmerge.cpp
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pkgmerge-exe
+          path: pkgmerge.exe
