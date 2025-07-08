@@ -28,13 +28,13 @@ bool natural_compare(const fs::path& a, const fs::path& b) {
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cerr << "❌ لطفاً پوشه حاوی فایل‌های .pkg را روی این فایل exe بیندازید.\n";
+        std::cerr << " لطفاً پوشه حاوی فایل‌های .pkg را روی این فایل exe بیندازید.\n";
         return 1;
     }
 
     fs::path input_dir(argv[1]);
     if (!fs::exists(input_dir) || !fs::is_directory(input_dir)) {
-        std::cerr << "❌ مسیر نامعتبر است یا پوشه وجود ندارد.\n";
+        std::cerr << " مسیر نامعتبر است یا پوشه وجود ندارد.\n";
         return 1;
     }
 
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (pkg_files.empty()) {
-        std::cerr << "⚠️ هیچ فایل .pkg داخل پوشه یافت نشد.\n";
+        std::cerr << " هیچ فایل .pkg داخل پوشه یافت نشد.\n";
         return 1;
     }
 
@@ -57,21 +57,21 @@ int main(int argc, char* argv[]) {
 
     std::ofstream out(out_path, std::ios::binary);
     if (!out) {
-        std::cerr << "❌ خطا در ساخت فایل خروجی: " << out_path << '\n';
+        std::cerr << " خطا در ساخت فایل خروجی: " << out_path << '\n';
         return 1;
     }
 
     for (const auto& file : pkg_files) {
         std::ifstream in(file, std::ios::binary);
         if (!in) {
-            std::cerr << "⚠️ خطا در باز کردن فایل: " << file << '\n';
+            std::cerr << " خطا در باز کردن فایل: " << file << '\n';
             continue;
         }
 
         out << in.rdbuf();
-        std::cout << "✅ اضافه شد: " << file.filename() << '\n';
+        std::cout << " اضافه شد: " << file.filename() << '\n';
     }
 
-    std::cout << "\n🎉 فایل نهایی ساخته شد: " << out_path << '\n";
+    std::cout << "\n<< فایل نهایی ساخته شد: " << out_path << '\n";
     return 0;
 }
